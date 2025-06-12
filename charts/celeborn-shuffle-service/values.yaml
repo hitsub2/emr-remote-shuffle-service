@@ -28,9 +28,9 @@ fullnameOverride: ""
 # Specifies the Celeborn image to use
 image:
   # -- Image repository
-  repository: 724853865853.dkr.ecr.us-west-2.amazonaws.com/eks-celeborn
+  repository: public.ecr.aws/myang-poc/celeborn-rss
   # -- Image tag
-  tag: emr-6.10.0
+  tag: spark3.3_8-jdk
   # -- Image pull policy
   pullPolicy: Always
 
