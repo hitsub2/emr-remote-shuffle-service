@@ -1,0 +1,59 @@
+---
+apiVersion: karpenter.sh/v1beta1
+kind: NodePool
+metadata:
+  name: spark-compute-optimized
+spec:
+  disruption:
+    budgets:
+    - nodes: 100%
+    consolidateAfter: 30s
+    consolidationPolicy: WhenEmpty
+    expireAfter: 'Never'
+  limits:
+    cpu: 1000
+  template:
+    metadata:
+      labels:
+        NodeGroupType: spark-app 
+        provisioner: spark-compute-optimized
+        type: karpenter
+    spec:
+      nodeClassRef:
+        name: spark-compute-optimized
+      requirements:
+      - key: topology.kubernetes.io/zone
+        operator: In
+        values:
+        - us-west-2a
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values: ["spot", "on-demand"]
+      - key: node.kubernetes.io/instance-type
+        operator: In
+        values:
+        - c5.2xlarge
+        - m5.2xlarge
+  weight: 10
+---
+apiVersion: karpenter.k8s.aws/v1beta1
+kind: EC2NodeClass
+metadata:
+  name: spark-compute-optimized
+spec:
+  amiFamily: AL2
+  amiSelectorTerms:
+  - name: amazon-eks-node-1.29-v20250519
+  metadataOptions:
+    httpEndpoint: enabled
+    httpProtocolIPv6: disabled
+    httpPutResponseHopLimit: 2
+    httpTokens: required
+  role: karpenter-emr-eks-celeborn-2025052411413514010000001a
+  securityGroupSelectorTerms:
+  - tags:
+      Name: emr-eks-celeborn-node
+  subnetSelectorTerms:
+  - tags:
+      Name: emr-eks-celeborn-private*
+
