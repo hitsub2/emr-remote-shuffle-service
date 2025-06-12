@@ -27,34 +27,44 @@ cd ./data-on-eks/analytics/terraform/emr-eks-karpenter
 terraform init
 ```
 
-***info***
-To deploy the EMR Spark Operator Add-on. You need to set the the below value to true in variables.tf file.
-```
+:::info
+To deploy the EMR Spark Operator Add-on. You need to set the the below value to `true` in `variables.tf` file.
+
+```hcl
 variable "enable_emr_spark_operator" {
   description = "Enable the Spark Operator to submit jobs with EMR Runtime"
   default     = true
   type        = bool
 }
-
 ```
-Deploy the cluster
 
-```
+:::
+
+Deploy the pattern
+
+```bash
 terraform apply
 ```
-Enter yes to apply.
 
-### Verify the resources
-Let’s verify the resources created by terraform apply.
+Enter `yes` to apply.
+
+## Verify the resources
+
+Let’s verify the resources created by `terraform apply`.
 
 Verify the Spark Operator and Amazon Managed service for Prometheus.
-```
+
+```bash
+
 helm list --namespace spark-operator -o yaml
+
 aws amp list-workspaces --alias amp-ws-emr-eks-karpenter
-```
-Verify Namespace emr-data-team-a and Pod status for Prometheus, Vertical Pod Autoscaler, Metrics Server and Cluster Autoscaler.
 
 ```
+
+Verify Namespace `emr-data-team-a` and Pod status for `Prometheus`, `Vertical Pod Autoscaler`, `Metrics Server` and `Cluster Autoscaler`.
+
+```bash
 aws eks --region us-west-2 update-kubeconfig --name spark-operator-doeks # Creates k8s config file to authenticate with EKS Cluster
 
 kubectl get nodes # Output shows the EKS Managed Node group nodes
@@ -66,8 +76,8 @@ kubectl get pods --namespace=vpa  # Output shows Vertical Pod Autoscaler pods
 kubectl get pods --namespace=kube-system | grep  metrics-server # Output shows Metric Server pod
 
 kubectl get pods --namespace=kube-system | grep  cluster-autoscaler # Output shows Cluster Autoscaler pod
+```
 
-````
 
 ## Enable Remote Shuffle Server (RSS)
 
