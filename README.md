@@ -30,7 +30,7 @@ terraform init
 > [!INFO] 
 >To deploy the EMR Spark Operator Add-on. You need to set the the below value to `true` in `variables.tf` file.
 
-```hcl
+```bash
 variable "enable_emr_spark_operator" {
   description = "Enable the Spark Operator to submit jobs with EMR Runtime"
   default     = true
