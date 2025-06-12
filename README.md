@@ -77,6 +77,18 @@ kubectl get pods --namespace=kube-system | grep  metrics-server # Output shows M
 kubectl get pods --namespace=kube-system | grep  cluster-autoscaler # Output shows Cluster Autoscaler pod
 ```
 
+Create karpenter nodepools and ec2nodeclass
+
+Please update the settings in nodepool and ec2nodeclass, like ```role`` etc.
+
+```bash
+
+git clone https://github.com/aws-samples/emr-remote-shuffle-service.git
+cd emr-remote-shuffle-service
+kubectl apply -f Karpenter
+
+```
+
 
 ## Enable Remote Shuffle Server (RSS)
 
