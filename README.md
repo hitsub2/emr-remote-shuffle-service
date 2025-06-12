@@ -27,8 +27,8 @@ cd ./data-on-eks/analytics/terraform/emr-eks-karpenter
 terraform init
 ```
 
-:::info
-To deploy the EMR Spark Operator Add-on. You need to set the the below value to `true` in `variables.tf` file.
+> [!INFO] 
+>To deploy the EMR Spark Operator Add-on. You need to set the the below value to `true` in `variables.tf` file.
 
 ```hcl
 variable "enable_emr_spark_operator" {
